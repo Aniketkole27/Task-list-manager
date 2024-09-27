@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            width: auto;
+        }
+
+        .contaner {
+            position: relative;
+            left: 30%;
+            top: 3rem;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+            height: 60%;
+            width: 40%;
+            border: 1px solid black;
+            padding: 2rem;
+            border-radius: 10px;
+        }
+
+        #putText {
+            width: 95%;
+            height: 30px;
+            border: 1px solid #000;
+            font-size: 17px;
+            padding: 7px;
+            border-radius: 5px;
+        }
+
+        button {
+            margin-top: 1rem;
+            border: 1px solid black;
+            border-radius: 4px;
+            padding: 10px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        li {
+            cursor: pointer;
+            user-select: none;
+            font-size: 17px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="contaner">
+        <input type="text" id="putText" placeholder="Enter text to add task " autocomplete="off">
+
+        <button type="button" id="btn">Add Task</button>
+        <button type="button" id="edit">Edit Task </button>
+        <ul class="list">
+            <!-- <li>Do Task manager Project</li> -->
+        </ul>
+    </div>
+    <script src="/taskManage.js"></script>
+</body>
+
+</html>
