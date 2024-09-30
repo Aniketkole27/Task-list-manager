@@ -23,17 +23,11 @@ const addTask = () => {
         listItem.textContent = addValue;
         list.appendChild(listItem);
 
-        // listItem.addEventListener("dbkclick",() =>{
-        //     list.removeChild(listItem);
-        // })
-        // list.appendChild(listItem);
-
         listItem.addEventListener("click", (e) => {
             if (editMode) {
                 const editText = prompt("Edit Text : ");
                 if (editText !== "" && editText !== null) {
                     listItem.textContent = editText;
-                    // list.appendChild(listItem);
                     // console.log("Triggred")
                 }
                 editMode = false;
