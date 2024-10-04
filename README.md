@@ -10,3 +10,7 @@ Implemented a task management system with the following features:
 5. **Task Click Behavior**: In edit mode, clicking on a task opens a prompt to edit the task. The task text is updated only if the user provides valid input.
 6. **Task List Interaction**: Tasks are appended to the list dynamically and are marked as editable after they are added.
 
+7. **Drag and Drop Functionality** : Tasks can be reordered using drag-and-drop functionality, allowing users to rearrange tasks as needed.
+
+8. **Delete Task** : Double-clicking on a task in remove mode triggers a confirmation to delete the task.
+The Delete Task button provides visual feedback when active like edit task button
