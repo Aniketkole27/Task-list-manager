@@ -85,17 +85,11 @@ edit.addEventListener("click", () => {
     }
 })
 
-list.forEach(item=>{
-    item.addEventListener('dragover',(e)=>{
-        e.preventDefault();
-    });
-    item.addEventListener('drop',drop);
-});
-
-function drop(){
-    console.log("element is dropped");
-   let id = +this.getAttribute('id');
-   console.log(id);
+const remove = document.querySelector("#delete");
+remove.addEventListener("click", () => {
+    if (check) {
+        removeMode = true;
+        remove.style.backgroundColor = "lightgreen";
 }
 
 
