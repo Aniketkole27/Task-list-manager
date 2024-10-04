@@ -28,6 +28,19 @@ const addTask = () => {
         })
         console.log(listItem);
 
+        // Removeing added Text
+        listItem.addEventListener('dblclick',(e)=>{  
+            if(removeMode){
+                let value = confirm("Double tap to delele !");
+                const item = e.target;
+                if(value !== false){
+                    item.remove();
+                }
+            }
+            removeMode = false;
+            remove.style.backgroundColor = "";
+        })
+
         // Editing added text
         listItem.addEventListener("click", (e) => {
             if (editMode) {
@@ -86,24 +99,30 @@ function drop(){
 }
 
 
-// list.addEventListener('dragover',(event) =>{
-//     event.preventDefault();
-// })
+// Drag and Drop Functionality
+list.addEventListener('dragover',(event)=>{
+    event.preventDefault();
+});
 
-// let end;
-// function drop(event) {
-//     event.preventDefault();
-//     end = +this.getAttribute('id');
-//     console.log("drop on = ", end);
-// }
+list.addEventListener('drop', function(event) {
+    event.preventDefault();
+    // const draggedElement = document.querySelector('.draggable');
+    console.log(dragItem);
+    let dropTarget = event.target;
+    console.log(dropTarget);
 
-// list.addEventListener("drop", drop);
+    if(dragItem == dropTarget){
+        let temp;
+        temp = dropTarget;
+        dropTarget = dragItem;
+        dragItem = temp;
+    }
 
+    let nextDragSibling = dragItem.nextSibling;
+    let nextDropSibling = dropTarget.nextSibling;
+    
+    list.insertBefore(dragItem,   nextDropSibling);
+    list.insertBefore(dropTarget, nextDragSibling);
 
-// function leave.forEach(item=>{
-
-// })
-// list.addEventListener("dropleave",leave);
-
-
+});
 
