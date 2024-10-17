@@ -1,7 +1,9 @@
 const input = document.querySelector("#putText");
 const addButton = document.querySelector("#btn");
-const list = document.querySelectorAll(".list");
+const list = document.querySelector(".list");
+
 let editMode = false;
+let removeMode = false;
 input.addEventListener("keydown", (event) => {
     if (event.key === 'Enter')
         addTask();
@@ -11,9 +13,9 @@ addButton.addEventListener('click', () => {
 })
 
 let check = false;
-let dragElement = null;
+// let dragElement = null;
 let index = 1;
-
+let dragItem;
 const addTask = () => {
     let addValue = input.value;
     if (addValue !== "") {
@@ -23,9 +25,7 @@ const addTask = () => {
         listItem.setAttribute("draggable", "true");
         listItem.setAttribute("id", index)
         index++;
-        list.forEach(list=>{
-            list.appendChild(listItem);
-        })
+        list.appendChild(listItem);
         console.log(listItem);
 
         // Removeing added Text
@@ -53,28 +53,21 @@ const addTask = () => {
                 edit.style.backgroundColor = "";
             }
         });
-
         check = true;
-        let close;
 
-        
         function dragStart() {
+            let close;
             close = +this.closest('li').getAttribute('id')
-            console.log("start = ", close);
-            console.log(document.getElementById(close))
-            // this.dataTransfer.setData("text/plain", close);
-            
+            dragItem = document.getElementById(close);
         }
-        // console.log(draggedElement1)
+
         listItem.addEventListener("dragstart", dragStart);
-        
         listItem.addEventListener("dragend", (event) => {
             event.target.classList.remove('hide');
         });
-        
     }
     input.value = "";
-    
+
 };
 
 const edit = document.querySelector("#edit");
@@ -90,8 +83,8 @@ remove.addEventListener("click", () => {
     if (check) {
         removeMode = true;
         remove.style.backgroundColor = "lightgreen";
-}
-
+    }
+})
 
 // Drag and Drop Functionality
 list.addEventListener('dragover',(event)=>{
