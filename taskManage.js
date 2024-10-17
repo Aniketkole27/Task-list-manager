@@ -112,4 +112,3 @@ list.addEventListener('drop', function(event) {
     list.insertBefore(dropTarget, nextDragSibling);
 
 });
-
