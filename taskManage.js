@@ -2,81 +2,127 @@ const input = document.querySelector("#putText");
 const addButton = document.querySelector("#btn");
 const list = document.querySelector(".list");
 
+// Function to load tasks from local storage
+window.addEventListener('load', () => {
+    console.log("Page has fully loaded!");
+
+    let storedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    
+    // Reload the task form local storage
+    storedTasks.forEach(task => {
+        createTaskItem(task);
+    });
+});
+
 let editMode = false;
 let removeMode = false;
 input.addEventListener("keydown", (event) => {
-    if (event.key === 'Enter')
-        addTask();
-})
+    if (event.key === 'Enter') addTask();
+});
+
 addButton.addEventListener('click', () => {
     addTask();
-})
+});
 
 let check = false;
-// let dragElement = null;
 let index = 1;
 let dragItem;
+
+// Function to add a task
 const addTask = () => {
     let addValue = input.value;
     if (addValue !== "") {
+        createTaskItem(addValue);
 
-        let listItem = document.createElement("li");
-        listItem.textContent = addValue;
-        listItem.setAttribute("draggable", "true");
-        listItem.setAttribute("id", index)
-        index++;
-        list.appendChild(listItem);
-        console.log(listItem);
+        // Save to local storage
+        saveTasksToLocalStorage();
 
-        // Removeing added Text
-        listItem.addEventListener('dblclick',(e)=>{  
-            if(removeMode){
-                let value = confirm("Double tap to delele !");
-                const item = e.target;
-                if(value !== false){
-                    item.remove();
-                }
-            }
-            removeMode = false;
-            remove.style.backgroundColor = "";
-        })
-
-        // Editing added text
-        listItem.addEventListener("click", (e) => {
-            if (editMode) {
-                const editText = prompt("Edit Text : ");
-                if (editText !== "" && editText !== null) {
-                    listItem.textContent = editText;
-                    // console.log("Triggred")
-                }
-                editMode = false;
-                edit.style.backgroundColor = "";
-            }
-        });
-        check = true;
-
-        function dragStart() {
-            let close;
-            close = +this.closest('li').getAttribute('id')
-            dragItem = document.getElementById(close);
-        }
-
-        listItem.addEventListener("dragstart", dragStart);
-        listItem.addEventListener("dragend", (event) => {
-            event.target.classList.remove('hide');
-        });
+        input.value = "";
     }
-    input.value = "";
-
 };
 
+// Function to create a task item
+const createTaskItem = (taskText) => {
+    let listItem = document.createElement("li");
+    listItem.textContent = taskText;
+    listItem.setAttribute("draggable", "true");
+    listItem.setAttribute("id", index);
+    index++;
+    list.appendChild(listItem);
+
+    // Event listeners for editing and removing
+    listItem.addEventListener('dblclick', (e) => {
+        if (removeMode) {
+            let confirmDelete = confirm("Double tap to delete!");
+            if (confirmDelete) {
+                listItem.remove();
+                saveTasksToLocalStorage(); 
+            }
+        }
+        removeMode = false;
+        remove.style.backgroundColor = "";
+    });
+
+    listItem.addEventListener("click", () => {
+        if (editMode) {
+            const editText = prompt("Edit Text:", listItem.textContent);
+            if (editText !== "" && editText !== null) {
+                listItem.textContent = editText;
+                saveTasksToLocalStorage(); 
+            }
+            editMode = false;
+            edit.style.backgroundColor = "";
+        }
+    });
+
+    // Drag and drop
+    listItem.addEventListener("dragstart", dragStart);
+    listItem.addEventListener("dragend", (event) => {
+        event.target.classList.remove('hide');
+    });
+};
+
+// Save tasks to local storage
+const saveTasksToLocalStorage = () => {
+    const tasks = [];
+    document.querySelectorAll(".list li").forEach(item => {
+        tasks.push(item.textContent);
+    });
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+};
+
+// Drag and Drop Functionality
+function dragStart() {
+    dragItem = this;
+}
+
+list.addEventListener('dragover', (event) => {
+    event.preventDefault();
+});
+
+list.addEventListener('drop', function(event) {
+    event.preventDefault();
+    let dropTarget = event.target;
+
+    if (dropTarget && dropTarget.tagName === 'LI') {
+        let nextDragSibling = dragItem.nextSibling;
+        let nextDropSibling = dropTarget.nextSibling;
+
+        list.insertBefore(dragItem, nextDropSibling);
+        list.insertBefore(dropTarget, nextDragSibling);
+
+        saveTasksToLocalStorage();
+    }
+});
+
+// Edit and Remove Modes
 const edit = document.querySelector("#edit");
 edit.addEventListener("click", () => {
     if (check) {
         editMode = true;
         edit.style.backgroundColor = "lightgreen";
     }
-})
+});
 
 const remove = document.querySelector("#delete");
 remove.addEventListener("click", () => {
@@ -84,31 +130,4 @@ remove.addEventListener("click", () => {
         removeMode = true;
         remove.style.backgroundColor = "lightgreen";
     }
-})
-
-// Drag and Drop Functionality
-list.addEventListener('dragover',(event)=>{
-    event.preventDefault();
-});
-
-list.addEventListener('drop', function(event) {
-    event.preventDefault();
-    // const draggedElement = document.querySelector('.draggable');
-    console.log(dragItem);
-    let dropTarget = event.target;
-    console.log(dropTarget);
-
-    if(dragItem == dropTarget){
-        let temp;
-        temp = dropTarget;
-        dropTarget = dragItem;
-        dragItem = temp;
-    }
-
-    let nextDragSibling = dragItem.nextSibling;
-    let nextDropSibling = dropTarget.nextSibling;
-    
-    list.insertBefore(dragItem,   nextDropSibling);
-    list.insertBefore(dropTarget, nextDragSibling);
-
 });
