@@ -12,24 +12,26 @@
 
         body {
             width: auto;
-            background-color: #736868;
+            background-color: rgb(13, 23, 33) !important;
             color: #333333;
         }
 
         .contaner {
             position: relative;
-            left: 30%;
+            left: 22%;
             top: 3rem;
             height: 100vh;
             justify-content: center;
             align-items: center;
             height: 60%;
-            width: 40%;
+            width: 50%;
             border: 1px solid black;
             padding: 2rem;
             border-radius: 10px;
             background-color: #fdfdfd;
-            box-shadow: rgb(13 13 8 / 50%) -8px 8px 15px 5px, rgba(255, 255, 0, 0.2) 1px 1px 1px;
+            /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19); */
+            box-shadow: rgba(254, 255, 255, 0.5) 0px 0px 15px 5px, rgba(0, 255, 255, 0.2) 2px 2px 5px;
+
             /* box-shadow: rgba(255, 255, 0, 0.5) 0px 0px 15px 5px, rgba(255, 255, 0, 0.2) 1px 1px 1px; */
         }
 
@@ -49,6 +51,7 @@
             padding: 10px;
             font-size: 15px;
             cursor: pointer;
+            color: black;
         }
 
         li {
@@ -69,22 +72,33 @@
             display: none;
         }
 
-        #delete {
-            background-color: #e57373;
-            /* color: white; */
+        #btn{
+            background-color: #80808090;
+            color: #212529;
+        }
+        #edit{
+            background-color: #ffc107; 
+            color: #212529;
+        }
+        #delete{
+            background-color: #dc3546c0; 
+            color: #212529;
         }
 
-        #edit {
-            background-color: #00bcd4;
-        }
 
-        #btn {
-            background-color: #ff9800;
+        h1 {
+            color: white;
+            text-align: center;
+            font-size: 25px;
+            position: relative;
+            top: 27px;
+            
         }
     </style>
 </head>
 
 <body>
+    <h1>Task Manager as a Notifier</h1>
     <div class="contaner">
         <input type="text" id="putText" placeholder="Enter text to add task " autocomplete="off">
 

@@ -29,9 +29,33 @@ let index = 1;
 let dragItem;
 
 // Function to add a task
+// const addTask = () => {
+//     const now = new Date();
+//     const currentTime = now.toLocaleTimeString();
+//     let space = "    ";
+//     let addValue = input.value.trim() + space +  currentTime;
+
+//     if (input.value.trim() !== "") {
+
+//         createTaskItem(addValue);
+
+//         // Save to local storage
+//         saveTasksToLocalStorage();
+
+//         input.value = "";
+//     }
+// };
+
 const addTask = () => {
-    let addValue = input.value;
-    if (addValue !== "") {
+    const now = new Date();
+    const currentTime = now.toLocaleTimeString();
+
+    const spaces = "\u00A0".repeat(25);
+    const  dash = "- ";
+    let addValue = `${input.value.trim()}${spaces}${dash}${currentTime}`;
+    // let addValue = input.value.trim();
+
+    if (input.value.trim() !== "") {
         createTaskItem(addValue);
 
         // Save to local storage
@@ -45,10 +69,13 @@ const addTask = () => {
 const createTaskItem = (taskText) => {
     let listItem = document.createElement("li");
     listItem.textContent = taskText;
+
     listItem.setAttribute("draggable", "true");
     listItem.setAttribute("id", index);
     index++;
     list.appendChild(listItem);
+
+    check = true;
 
     // Event listeners for editing and removing
     listItem.addEventListener('dblclick', (e) => {
@@ -57,9 +84,11 @@ const createTaskItem = (taskText) => {
             if (confirmDelete) {
                 listItem.remove();
                 saveTasksToLocalStorage(); 
+                // check = false;
             }
         }
         removeMode = false;
+        
         remove.style.backgroundColor = "";
     });
 
@@ -69,6 +98,7 @@ const createTaskItem = (taskText) => {
             if (editText !== "" && editText !== null) {
                 listItem.textContent = editText;
                 saveTasksToLocalStorage(); 
+                // check = false;
             }
             editMode = false;
             edit.style.backgroundColor = "";
